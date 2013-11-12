@@ -1,0 +1,18 @@
+<h2>Testing Page for WebSocket Ruby Gem</h2>
+
+<form>
+  Hand Shake: 
+  <select name="handshake"> 
+    <% @options.each do |option| %>
+      <%= "<option>#{ option }</option>" %>
+    <% end %>
+  </select>  
+  <br>
+  Binary Input: <input name="binary" type="checkbox" <%= @type %> ><br>
+  Binary Data Mask: <input name="mask" type="text" <%= "value='#{@mask}'" %> ><br>
+  Data: <input name="data" type="text" <%= "value='#{@original_data}'" %> >
+  <br>
+  <input type="submit" value="Get Frame">
+</form>
+
+
