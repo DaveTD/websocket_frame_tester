@@ -3,20 +3,21 @@ require 'websocket'
 
 get '/test' do
   @options = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,75,76]
+  @binary_compatible = [3,4,5,6,7,8,9,10,11,12,13]
 
   @handshake = params[:handshake].to_i
   @type = params[:binary]=="on"? "checked" : ""
-  @binary = params[:binary]=="on"? "binary" : "text"
-  @binary_symbol = @binary.to_sym
   @data = params[:data]
   @original_data = params[:data]
   @mask = params[:mask]
   @quoted_mask = "\"#{@mask}\""
 
-  if @binary == "binary"
+  if @type == "checked" && @binary_compatible.include?(@handshake)
+    p "test"
     array_convert
-    # @data = @data.pack(@quoted_mask)
-    p @data
+    @binary_symbol = "binary".to_sym
+  else
+    @binary_symbol = "text".to_sym
   end
 
   @frame = WebSocket::Frame::Outgoing::Server.new(:version => @handshake, :data => @data, :type => @binary_symbol)
